@@ -9,11 +9,33 @@
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100vh;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
         }
+
+
+        /* Home link */
+        .nav{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            background-color: #007bff;
+            margin: 0px;
+            padding: 2px;  
+            box-sizing: border-box;
+            font-size: 18px;
+            color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        }
+        .nav h3{
+            font-size: 24px;
+        }
+            
 
         .calendar-container{
             width: 90%;
@@ -123,10 +145,15 @@
             text-align: center;
         }
 
-
     </style>
 </head>
 <body>
+    <div class="nav">
+        <div class="home">Back</div>  
+        <h3>Add New Expense</h3>          
+        <div class="rules">Instructions</div> 
+    </div>
+    
     <div class="calendar-container">
         <!-- Calendar Header -->
         <div class="calendar-header">
@@ -157,7 +184,7 @@
             <form method="post">
                 {% csrf_token %}
                 {{form.as_p}}
-                <button type="submit" onclick="displayMessage()">Submit</button>
+                <button type="submit" onclick="addExpense()">Submit</button>
                 <button class="close" type="button" onclick="closeForm()">Close</button>
             </form>
 
