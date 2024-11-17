@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.db.models import Sum
 from .forms import ExpenseForm
-from django.http import HttpResponse
-from datetime import date
+from .models import ExpenseAdd
 
 # Create your views here.
 def expenseAddView(request):
@@ -15,4 +16,20 @@ def expenseAddView(request):
     else:
         form = ExpenseForm()
 
-    return render(request, 'dashboard.html', {'form': form})
+    return render(request, 'dashboard.html', {'form': form}) 
+    
+def expenseView(request):
+    return render(request, 'expense-views.html')
+
+def expenseViewApi(request):
+    expense_data_perday = ExpenseAdd.objects.values('expense_date').annotate(total_expense = Sum('expense'))
+    expenses = []
+    for item in expense_data_perday:
+        expenses.append({
+            'date':item['expense_date'],
+            'total_expense' : item['total_expense']
+        })
+    return JsonResponse({'expenses':expenses})
+
+def homePage(request):
+    return render(request, 'home.html')
