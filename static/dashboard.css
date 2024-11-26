@@ -1,0 +1,163 @@
+body, html{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Home link */
+.nav{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    background-color: #2a8ddd;
+    margin: 0px;
+    padding: 2px;  
+    box-sizing: border-box;
+    font-size: 18px;
+    color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.nav h3{
+    font-size: 24px;
+}
+
+.home a{
+    color: white;
+    font-size: 18px;
+}
+
+.calendar-container{
+    width: 90%;
+    max-width: 90%;
+    text-align: center;
+    padding: 20px;
+    position: absolute;
+    top: 80px;
+
+}
+.calendar-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.calendar-header h2{
+    margin: 0;
+    font-size: 32px;
+}
+.calendar-header button{
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: blue;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.days{
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+.dayN{
+    background-color: rgb(10, 214, 10);
+    padding: 10px;
+    border-radius: 5px;
+
+}
+.calendar-grid, .days{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+}
+
+.day{
+    padding: 10px 20px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    font-size: 18px;
+    position: relative;
+}
+
+.day:hover{
+    background-color: #ddd;
+}
+
+.day.disabled{
+    background-color: #e0e0e0;
+    cursor: not-allowed;
+}
+.calendar-grid ul{
+    outline: none;
+}
+
+.day ul li{
+    outline: none;
+    list-style: none;
+    text-decoration: none;
+    position: absolute;
+    top: 5px;
+    left: 10px;
+}
+
+/* Form container */
+#expenseModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+.form-container{
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.form-container input{
+    width: 95%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.form-container button{
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.form-container textarea{
+    width: 98%;
+    max-width: 98%;
+    height: 10%;
+    margin-bottom: 10px;
+}
+.form-description{
+    display: block;
+    margin-bottom: 5px;
+}
+.form-container h3{
+    text-align: center;
+}
