@@ -1,155 +1,16 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <style>
-        body, html{
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
+    <link rel="stylesheet" href="{% static '/dashboard.css' %}">
 
-
-        /* Home link */
-        .nav{
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            width: 100%;
-            background-color: #007bff;
-            margin: 0px;
-            padding: 2px;  
-            box-sizing: border-box;
-            font-size: 18px;
-            color: white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-        }
-        .nav h3{
-            font-size: 24px;
-        }
-            
-
-        .calendar-container{
-            width: 90%;
-            max-width: 90%;
-            text-align: center;
-            padding: 20px;
-        }
-        .calendar-header{
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-        .calendar-header h2{
-            margin: 0;
-            font-size: 32px;
-        }
-        .calendar-header button{
-            padding: 10px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: blue;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-        .days{
-            margin-bottom: 30px;
-            font-size: 18px;
-        }
-        .dayN{
-            background-color: rgb(10, 214, 10);
-            padding: 10px;
-            border-radius: 5px;
-
-        }
-        .calendar-grid, .days{
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
-        }
-
-        .day{
-            padding: 20px;
-            background-color: #f0f0f0;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-            font-size: 18px;
-        }
-
-        .day:hover{
-            background-color: #ddd;
-        }
-
-        .day.disabled{
-            background-color: #e0e0e0;
-            cursor: not-allowed;
-        }
-
-        /* Form container */
-        #expenseModal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-        }
-        .form-container{
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 600px;
-            width: 100%;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .form-container input{
-            width: 95%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .form-container button{
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .form-container textarea{
-            width: 98%;
-            max-width: 98%;
-            height: 10%;
-            margin-bottom: 10px;
-        }
-        .form-description{
-            display: block;
-            margin-bottom: 5px;
-        }
-        .form-container h3{
-            text-align: center;
-        }
-
-    </style>
 </head>
 <body>
     <div class="nav">
-        <div class="home">Back</div>  
+        <div class="home"><a href="/" style="color: coral;">Back</a></div>  
         <h3>Add New Expense</h3>          
         <div class="rules">Instructions</div> 
     </div>
@@ -157,11 +18,11 @@
     <div class="calendar-container">
         <!-- Calendar Header -->
         <div class="calendar-header">
-            <button onclick="changeMonth(-1)">&lAarr; Prev</button>
-            <h2  id="calendarTitle"></h2>
-            <button onclick="changeMonth(1)">Next &rAarr;</button>
+            <button onclick="changeMonth(-1)">&larr; Prev</button>
+            <h2 id="calendarTitle"></h2>
+            <button onclick="changeMonth(1)">Next &rarr;</button>
         </div>
-        <!-- Days name showed -->
+        <!-- Days of the Week -->
         <div class="days" id="dayName">
             <div class="dayN">Sun</div>
             <div class="dayN">Mon</div>
@@ -178,76 +39,128 @@
         </div>
     </div>
 
-    <div id="expenseModal">
+    <!-- Expense Modal -->
+    <div id="expenseModal" style="display:none;">
         <div id="formContainer" class="form-container">
             <h3>Enter Expense for <span id="selectedDate"></span></h3>
             <form method="post">
                 {% csrf_token %}
-                {{form.as_p}}
-                <button type="submit" onclick="addExpense()">Submit</button>
+                {{ form.as_p }}
+                <button type="submit">Submit</button>
                 <button class="close" type="button" onclick="closeForm()">Close</button>
+                <button class="view" type="button" onclick="redirectToView()" >View</button>
             </form>
-
         </div>
     </div>
     
     <script>
-        let currentDate = new Date()
+        let currentDate = new Date();
 
         // Displaying the calendar
         function formatDate(day) {
-            let data = document.getElementById('calendarTitle').innerText;
-            let year = currentDate.getFullYear(data);
-            let month = currentDate.getMonth(data) + 1;
-
-            return `${year}-${month}-${day}`;
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth() + 1; // Months are 0-indexed
+            return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
         }
 
-        function changeMonth(direction){
-            currentDate.setMonth(currentDate.getMonth()+ direction);
+        function changeMonth(direction) {
+            currentDate.setMonth(currentDate.getMonth() + direction);
             renderCalendar();
         }
 
-        function renderCalendar(){
-            const year = currentDate.getFullYear();
-            const month = currentDate.getMonth();
-            
-            document.getElementById('calendarTitle').innerText = `${currentDate.toLocaleString('default', {month: 'long'})} ${year}`;
+        function renderCalendar() {
+        let expenseByDay = {};
 
-            const firstDay = new Date(year, month, 1).getDay();
-            const totalDays = new Date(year, month+1, 0).getDate();
+            fetch('/api-expenseView/')
+                .then(response => response.json())
+                .then(data => {
+                    const year = currentDate.getFullYear();
+                    const month = currentDate.getMonth();
 
-            const calendarGrid = document.getElementById('calendarGrid');
-            calendarGrid.innerHTML = '';
+                    document.getElementById('calendarTitle').innerText = `${currentDate.toLocaleString('default', { month: 'long' })} ${year}`;
 
-            for(let i = 0; i < firstDay; i++){
-                const emptyDay = document.createElement('div');
-                calendarGrid.appendChild(emptyDay);
-            }
+                    const firstDay = new Date(year, month, 1).getDay();
+                    const totalDays = new Date(year, month + 1, 0).getDate();
 
-            for(let day = 1; day <= totalDays; day++){
-                const dayBox = document.createElement('div');
-                dayBox.classList.add('day');
-                dayBox.innerText = day;
-                dayBox.onclick = () => showExpenseForm(day);
-                calendarGrid.appendChild(dayBox);
-            }
+                    const calendarGrid = document.getElementById('calendarGrid');
+                    calendarGrid.innerHTML = '';
+
+                    // Organizing expenses by day
+                    data.expenses.forEach(expense => {
+                        const expenseDate = new Date(expense.date);
+                        const expenseYear = expenseDate.getFullYear();
+                        const expenseMonth = expenseDate.getMonth();
+                        const expenseDay = expenseDate.getDate();
+
+                        if(expenseYear === year && expenseMonth == month){
+                            const dateKey = `${expenseYear}-${expenseMonth+1}-${expenseDate}`;
+                            if (!expenseByDay[expenseDay]) {
+                            expenseByDay[expenseDay] = [];
+                            }
+                            expenseByDay[expenseDay].push(expense);
+                            }
+                        
+                    });
+
+                    // Populating the calendar
+                    for (let i = 0; i < firstDay; i++) {
+                        const emptyDay = document.createElement('div');
+                        calendarGrid.appendChild(emptyDay);
+                    }
+
+                    for (let day = 1; day <= totalDays; day++) {
+                        const dayBox = document.createElement('div');
+                        dayBox.classList.add('day');
+                        dayBox.innerText = day;
+
+                        // If there are expenses for this day, display them
+                        if (expenseByDay[day]) {
+                            const expensesList = document.createElement('ul');
+
+                            // Just add the first expense for the given day
+                            const expense = expenseByDay[day][0];  // Since there's only one expense per day
+                            const expenseItem = document.createElement('li');
+                            expenseItem.innerText = `\u20B9${expense.total_expense}`;
+                            expensesList.appendChild(expenseItem);
+
+                            dayBox.appendChild(expensesList);
+                        }
+                        else{
+                            const expensesList = document.createElement('ul');
+
+                            // Just add the first expense for the given day
+                              // Since there's only one expense per day
+                            const expenseItem = document.createElement('li');
+                            expensesList.appendChild(expenseItem);
+                            dayBox.appendChild(expensesList);
+                        }
+                        dayBox.onclick = () => showExpenseForm(day);
+                        calendarGrid.appendChild(dayBox);
+                    }
+                });
         }
-        renderCalendar();
 
-        // Form functions 
+        // Show expense form for selected day
         function showExpenseForm(day) {
             document.getElementById('expenseModal').style.display = 'flex';
-            const formatData = formatDate(day);
-            document.getElementById('selectedDate').innerText = formatData;
-            document.getElementById('id_expense_date').value = formatData;
+            const formattedDate = formatDate(day);
+            document.getElementById('selectedDate').innerText = formattedDate;
+            document.getElementById('id_expense_date').value = formattedDate;
         }
 
-        function closeForm(){
+        // Close the expense form modal
+        function closeForm() {
             document.getElementById('expenseModal').style.display = 'none';
-
         }
 
+        function redirectToView(){
+            const selectDate = document.getElementById('selectedDate').innerText
+            const formattedDate = new Date(selectDate).toISOString().split('T')[0]
+            window.location.href = `/day-details/${formattedDate}/`
+        }
+
+        // Initial calendar render
+        renderCalendar();
     </script>
 </body>
 </html>
