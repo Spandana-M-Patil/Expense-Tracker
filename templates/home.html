@@ -3,10 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Expense Tracker - Home</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f7;
+            color: #333;
+            text-align: center;
+        }
+        header {
+            background-color: #0066cc;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 3rem;
+            font-weight: 700;
+        }
+        nav {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        nav a {
+            text-decoration: none;
+            color: white;
+            background-color: #0066cc;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            display: inline-block;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+        nav a:hover {
+            background-color: #004a99;
+        }
+        section {
+            padding: 40px 20px;
+        }
+        section h2 {
+            font-size: 2.5rem;
+            color: #0066cc;
+            margin-bottom: 20px;
+        }
+        section p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #555;
+        }
+        .cta-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background-color: #0066cc;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .cta-button:hover {
+            background-color: #004a99;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 15px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+        }
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
-    <h1><a href="/views/">View your expense</a></h1>
-    <h1><a href="/add/">Add your expense</a></h1>
+    <header>
+        <h1>Expense Tracker</h1>
+    </header>
+    <nav>
+        <a href="/add/">Add Expense</a>
+        <a href="/expenses/">View Expenses</a>
+        <a href="/reports/">View Reports</a>
+        <a href="/settings/">Settings</a>
+    </nav>
+    <section>
+        <h2>Welcome to Your Expense Tracker</h2>
+        <p>Easily monitor your expenses, manage your budgets, and take charge of your financial well-being.</p>
+        <p>Click on any option above to start tracking and managing your expenses effectively.</p>
+        <a href="/add/" class="cta-button">Get Started Now</a>
+    </section>
+    <footer>
+        <p>&copy; 2024 Expense Tracker. All rights reserved.</p>
+    </footer>
 </body>
 </html>

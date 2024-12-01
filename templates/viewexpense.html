@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Expenses</title>
+    <link rel="stylesheet" href="{% static 'viewexpense.css' %}">
+  
+</head>
+<body>
+    <header>
+        <h1>View Expenses</h1>
+    </header>
+    <div id="noExpense" style="display: none;">
+        <p>No record found!!</p>
+    </div>
+    <section class="filters">
+        <h2>Filter Expenses</h2>
+        <label for="start">From: </label>
+        <input type="date" id="start"/>
+        <label for="end">To: </label>
+        <input type="date" id="end"/>
+        <select id="selectCategory">
+            <option value="">All Categories</option>
+            <!-- Categories will be populated dynamically -->
+        </select>
+        <button onclick="fetchTheExpenses()">Apply Filters</button>
+    </section>
+    <section class="summary">
+        <h2>Summary</h2>
+        <p id="totalExpense">Total Expenses: 0 Rupees</p>
+    </section>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody id="dynamicRows">
+            <!-- Expense rows will be populated dynamically -->
+        </tbody>
+    </table>
+
+    <script>
+        function fetchCategory(){
+            fetch('/categoryList/')
+                .then(response => response.json())
+                .then(data => {
+                    const options = document.getElementById('selectCategory');
+                    data.category.forEach(element => {
+                        const newOption = document.createElement('option');
+                        newOption.value = element.category;
+                        newOption.textContent = element.category;
+                        options.appendChild(newOption);
+                    });
+                });
+        }
+
+        function fetchTheExpenses() {
+            const start = document.getElementById('start').value;
+            const end = document.getElementById('end').value;
+            const selectCategory = document.getElementById('selectCategory').value;
+
+            if (!selectCategory) {
+                alert('Please select a category!');
+                return;
+            }
+
+            fetch(`/fetchViewExpense/${start}/${end}/${selectCategory}/`)
+                .then(response => response.json())
+                .then(data => {
+                    const totalExpense = document.getElementById('totalExpense');
+                    const totalAmount = data.total['total_sum'] || 0;
+                    totalExpense.textContent = `Total Expenses: ${totalAmount.toFixed(2)} Rupees`;
+
+                    const noExpense = document.getElementById('noExpense');
+                    const tableRows = document.getElementById('dynamicRows');
+                    tableRows.innerHTML = '';  // Clear existing rows
+
+                    if (totalAmount === 0) {
+                        noExpense.style.display = 'block';
+                    } else {
+                        noExpense.style.display = 'none';
+                        data.expenses.forEach(element => {
+                            const newRow = document.createElement('tr');
+                            newRow.innerHTML = `
+                                <td>${element.expense_date}</td>
+                                <td>${element.description}</td>
+                                <td>${element.category}</td>
+                                <td>${element.expense.toFixed(2)}</td>
+                            `;
+                            tableRows.appendChild(newRow);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.log("Error fetching the data!", error);
+                });
+        }
+
+        fetchCategory();
+    </script>
+</body>
+</html>

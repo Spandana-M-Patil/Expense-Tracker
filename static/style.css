@@ -32,9 +32,31 @@ body, html{
     font-size: 24px;
 }
 
-.home a{
+.home a, .nav .rules{
     color: white;
-    font-size: 18px;
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+    transition: 0.4s color;
+}
+
+.home a::after, .rules::after{
+    content: " ";
+    height: 2px;
+    background-color: red;
+    position: absolute;
+    display: block;
+    margin: auto;
+    width: 0;
+    transition: 0.4s width;
+}
+
+.home a:hover::after, .rules:hover::after{
+    width: 100%;
+}
+
+.home a:hover, .rules:hover{
+    color: rgb(237, 236, 236);
 }
 
 .calendar-container{
