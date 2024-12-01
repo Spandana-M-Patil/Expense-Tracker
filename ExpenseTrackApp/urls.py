@@ -24,5 +24,8 @@ urlpatterns = [
     path('api-expenseView/', views.expenseViewApi),
     path('day-details/<str:date>/', views.day_details, name='day-details'),
     path('fetch-expense-data/<int:id>/', views.fetch_expense_data),
+    path('expenses/', views.view_expense, name='view_expense'),
+    path('fetchViewExpense/<str:start>/<str:end>/<str:selectCategory>/', views.fetchTheExpenses, name='fetchTheExpenses'),
+    path('categoryList/', views.category_list, name='category_list')
 
 ]

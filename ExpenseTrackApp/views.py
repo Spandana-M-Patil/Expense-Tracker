@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 import json
 from django.contrib import messages
 from django.views.decorators.cache import never_cache
-
+from datetime import datetime
 # Create your views here.
 def expenseAddView(request):
     if request.method == 'POST':
@@ -53,7 +53,7 @@ def day_details(request, date):
             expense_id = request.POST.get('expense_id')
             expense = get_object_or_404(ExpenseAdd, id=expense_id)
             expense.delete()
-            messages.success(request, 'Expense delted successfully!!')
+            messages.success(request, 'Expense deleted successfully!')
             return redirect(reverse_lazy('day-details', args=[date]))
         
         # Handle edit action
@@ -95,3 +95,23 @@ def fetch_expense_data(request, id):
             'description': expenses.description,
         }
         return JsonResponse(data)
+
+# viewing expenses
+
+def view_expense(request):
+    return render(request, "viewexpense.html")
+
+def fetchTheExpenses(request, start, end, selectCategory):
+    start_date = datetime.strptime(start, '%Y-%m-%d').date()
+    end_date = datetime.strptime(end, '%Y-%m-%d').date()
+    selectCategory = selectCategory.lower()
+    expenses = ExpenseAdd.objects.filter(expense_date__gte = start_date, expense_date__lte = end_date, category = selectCategory)
+    expense_list = list(expenses.values())
+    sum_range = expenses.aggregate(total_sum = Sum('expense'))
+
+    return JsonResponse({'expenses':expense_list, 'total':sum_range})
+
+def category_list(request):
+    category_list = list(ExpenseAdd.objects.values('category').distinct())
+    return JsonResponse({'category': category_list})
+
