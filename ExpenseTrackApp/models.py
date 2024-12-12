@@ -1,7 +1,9 @@
 from django.db import models
-from datetime import date
+from django.contrib.auth.models import User
+
 # Create your models here.
 class ExpenseAdd(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='expenses')
     expense = models.FloatField()
     category = models.CharField(max_length=255)
     description = models.CharField(max_length=2000)

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <title>Registration Form</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- Registration Form -->
+        <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h1 style="text-align: center;"><span style="color: black;">Register</span></h1>
+            <hr>
+
+            {% if messages %}
+            <div class="alert alert-primary" role="alert">
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="form-group">
+                <label for="InputFirstName">First name</label>
+                <input type="text" class="form-control" id="InputFirstName" name="first_name" placeholder="Enter First name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="InputLastName">Last name</label>
+                <input type="text" name="last_name" class="form-control" id="InputLastName" placeholder="Enter Last name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="InputUsername">Username</label>
+                <input type="text" class="form-control" name="username" id="InputUsername" placeholder="Enter username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="InputPassword">Password</label>
+                <input type="password" class="form-control" name="password" id="InputPassword" placeholder="Password" required>
+            </div>
+
+            <p>Already have an account? <a href="/login/">Login</a></p>
+
+            <!-- Button Container -->
+            <div class="d-flex justify-content-between mt-3">
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary">Submit</button>
+
+                <!-- Button to trigger the "How it Works?" modal -->
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#howItWorksModal">
+                    How it Works?
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Modal for "How it Works?" -->
+    <div class="modal fade" id="howItWorksModal" tabindex="-1" aria-labelledby="howItWorksLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="howItWorksLabel">How It Works?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Welcome to the Expense Tracker! Here’s how it works:</p>
+                    <ul>
+                        <li><strong>Add Expenses:</strong> Use the "Add Expense" button to log your daily expenses.</li>
+                        <li><strong>View Expenses:</strong> Navigate to the dashboard to view expenses by date and category.</li>
+                        <li><strong>Analyze Spending:</strong> Use the analytics tab to track your spending trends.</li>
+                        <li><strong>Secure Login:</strong> Your data is safe and linked to your account.</li>
+                    </ul>
+                    <p class="mt-2">For more details, visit the <a href="/documentation/">Documentation Page</a>.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
