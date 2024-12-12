@@ -23,7 +23,7 @@ This repository contains a Django-based Expense Tracker application.
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/<your-username>/expense-tracker.git
+git clone https://github.com/Spandana-M-Patil/Expense-Tracker.git
 cd expense-tracker
 ```
 
