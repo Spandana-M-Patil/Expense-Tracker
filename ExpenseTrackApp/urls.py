@@ -18,7 +18,7 @@ from django.urls import path
 from ExpenseTrackApp import views
 
 urlpatterns = [
-    path('', views.homePage),
+    path('home/', views.homePage),
     path('views/', views.expenseView),
     path('add/', views.expenseAddView),
     path('api-expenseView/', views.expenseViewApi),
@@ -26,6 +26,8 @@ urlpatterns = [
     path('fetch-expense-data/<int:id>/', views.fetch_expense_data),
     path('expenses/', views.view_expense, name='view_expense'),
     path('fetchViewExpense/<str:start>/<str:end>/<str:selectCategory>/', views.fetchTheExpenses, name='fetchTheExpenses'),
-    path('categoryList/', views.category_list, name='category_list')
+    path('categoryList/', views.category_list, name='category_list'),
+    path('', views.register_page, name='register_page'),
+    path('login/', views.login_page, name="login"),
 
 ]
