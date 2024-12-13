@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker Documentation</title>
+    <link rel="stylesheet" href="{% static 'documentation.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Expense Tracker Web Application Documentation</h1>
+        <nav>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#registration">Registration</a></li>
+                <li><a href="#login">Login</a></li>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#add-expense">Add Expense</a></li>
+                <li><a href="#view-expenses">View Expenses</a></li>
+                <li><a href="#expense-details">Expense Details</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <section id="overview">
+            <h2>Overview</h2>
+            <p>The Expense Tracker web application allows users to track and manage their daily expenses. Users can register, log in, add expenses to specific dates, view expenses, and apply filters to view expenses by categories or date ranges. The application provides a user-friendly interface with a calendar view and modal forms for adding and editing expenses.</p>
+        </section>
+
+        <section id="registration">
+            <h2>1. Registration Page</h2>
+            <p><strong>Purpose:</strong> Allows users to register for an account.</p>
+            <ul>
+                <li><strong>Form Fields:</strong> Username, Password, Email.</li>
+                <li><strong>Action:</strong> Upon successful registration, users are redirected to the login page.</li>
+            </ul>
+            <img src="{% static 'images/register.png' %}" alt="not found!" style="width: 100%;">
+
+        </section>
+
+        <section id="login">
+            <h2>2. Login Page</h2>
+            <p><strong>Purpose:</strong> Authenticates users to allow access to the Expense Tracker.</p>
+            <ul>
+                <li><strong>Form Fields:</strong> Username, Password.</li>
+                <li><strong>Action:</strong> On successful login, users are redirected to the home page where they can start adding and viewing expenses.</li>
+            </ul>
+            <img src="{% static 'images/login.png' %}" alt="not found!" style="width: 100%;">
+
+        </section>
+
+        <section id="home">
+            <h2>3. Home Page</h2>
+            <p><strong>Purpose:</strong> Displays the main interface of the expense tracker, providing navigation links for adding expenses and viewing expenses.</p>
+            <ul>
+                <li><strong>Navigation:</strong> Links to "Add Expense" and "View Expenses" pages.</li>
+                <li><strong>Call to Action:</strong> A button leading users to start adding expenses.</li>
+            </ul>
+            <img src="{% static 'images/home.png' %}" alt="not found!" style="width: 100%;">
+
+        </section>
+
+        <section id="add-expense">
+            <h2>4. Add Expense Page</h2>
+            <p><strong>Purpose:</strong> Allows users to add expenses on specific dates using a calendar interface.</p>
+            <ul>
+                <li><strong>Calendar:</strong> Displays a calendar with clickable dates. The current month is shown by default.</li>
+                <li><strong>Expense Form:</strong> When a user clicks on a date, an expense form modal is displayed, where they can input the total amount, category, and description of the expense.</li>
+                <li><strong>Submit Button:</strong> After filling the form, users can submit the expense, which will be saved to the database.</li>
+                <li><strong>View Button:</strong> A button in the modal redirects users to the "View Expenses" page for that specific date.</li>
+            </ul>
+            <img src="{% static 'images/addexpense.png' %}" alt="not found!" style="width: 100%;">
+            <img src="{% static 'images/addexpense1.png' %}" alt="not found!" style="width: 100%;">
+            <img src="{% static 'images/addexpense2.png' %}" alt="not found!" style="width: 100%;">
+
+        </section>
+
+        <section id="view-expenses">
+            <h2>5. View Expenses Page</h2>
+            <p><strong>Purpose:</strong> Displays a summary of all expenses and allows users to filter expenses by date range and category.</p>
+            <ul>
+                <li><strong>Filters:</strong> Users can filter expenses by category and date range.</li>
+                <li><strong>Expense Summary:</strong> Displays the total expenses for the selected filters.</li>
+                <li><strong>Expense Table:</strong> Displays a table with all expenses, including the date, description, category, and amount.</li>
+                <li><strong>No Record Found:</strong> If there are no expenses for the selected filters, a "No record found" message is displayed.</li>
+            </ul>
+            <img src="{% static 'images/view.png' %}" alt="not found!" style="width: 100%;">
+
+        </section>
+
+        <section id="expense-details">
+            <h2>6. Expense Details Page</h2>
+            <p><strong>Purpose:</strong> Displays a detailed view of the expenses for a particular date, allowing users to see specific expense details for that day.</p>
+            <ul>
+                <li><strong>Details:</strong> Displays the breakdown of each expense added for the selected date.</li>
+            </ul>
+            <img src="{% static 'images/detail.png' %}" alt="not found!" style="width: 100%;">
+
+        </section>
+    </main>
+
+    
+</body>
+</html>
