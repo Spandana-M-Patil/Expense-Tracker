@@ -29,5 +29,6 @@ urlpatterns = [
     path('categoryList/', views.category_list, name='category_list'),
     path('', views.register_page, name='register_page'),
     path('login/', views.login_page, name="login"),
+    path('documentation/', views.documentation_page, name='documentation')
 
 ]

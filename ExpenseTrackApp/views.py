@@ -167,3 +167,6 @@ def register_page(request):
         messages.info(request, "Account created Successfully!")
         return redirect('/login/')
     return render(request, 'register.html')
+
+def documentation_page(request):
+    return render(request, 'documentation.html')
